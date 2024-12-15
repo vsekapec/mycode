@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Институт</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+    <style>
+        /* Общие стили */
+        body { margin: 0; }
+        
+        /* Подключение шрифтов */
+		@font-face {
+			font-family: 'fonts'; 
+			src: url("fonts/nyghtserif-medium.ttf"); 
+			}
+        @font-face {
+            font-family: 'ZonaPro';
+            src: local('Zona Pro Light'), local('Zona-Pro-Light'),
+                url('fonts/ZonaPro-Light.woff2') format('woff2'),
+                url('fonts/ZonaPro-Light.woff') format('woff'),
+                url('fonts/ZonaPro-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+        }
+
+		.videotext {
+			font-family: 'fonts';
+			font-size: 30px;
+		}
+
+        /* Стили для шапки */
+        .header {
+            width: 100%;
+            height: 100px;
+            position: fixed;
+            top: 0;
+            background-image: url(plashka/header.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+            border-bottom: 1px solid;
+            border-image: linear-gradient(to right, #ffffff, #90acaa, #6A9393, #ffffff) 47% 0%;
+        }
+
+        /* Кнопки навигации */
+        .floatLeft {
+            float: left;
+            margin: 8%;
+            font-family: 'fonts';
+            font-size: 30px;
+            color: blue;
+            border-radius: 30px;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            outline: none;
+        }
+
+        .floatLeft:hover {
+            background: #8ff6ec;
+        }
+        
+		/* Контейнер меню */
+        .menu {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+		/* Общие стили для секций (D1, orientir, и т.д.) */
+        .section {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            background-size: 100% 100%; /* Растягиваем картинку на всю область */
+        }
+		
+        .D1 {
+            background-image: url("image/photo_2024-12-06_15-14-38.jpg");
+            height: 750px;
+            padding-top: 170px;
+        }
+
+		.orientir {
+			background-image: url("orientir/1/photo_2024-12-07_22-54-12.jpg");
+            width: 60%;
+			height: 480px;
+		}
+
+		.orientir2 {
+			background-image: url("orientir/2/photo_2024-12-07_22-56-15.jpg");
+            height: 650px;
+        }
+
+        .igra {
+            background-image: url("igra/Frame25.png");
+            height: 750px;
+        }
+        /*стили для кнопки игры*/
+		.igra-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+			padding: 10px 20px; /* Задаем отступы для текста */
+            background: white;
+            border: none;
+            cursor: pointer;
+            color: black; /* Делаем текст белым */
+            font-size: 20px;
+            border-radius: 5px; /* Добавим скругление углов */
+            opacity: 1;/* делаем кнопку непрозрачной */
+            box-shadow: none;
+        }
+
+        .igra-button:hover {
+            background: #FFF0F5; /* меняем цвет на более темный зеленый при наведении */
+        }
+
+
+        .karta {
+            background-image: url("karta/photo_2024-12-07_22-01-50.jpg");
+            height: 750px;
+        }
+
+        .video {
+            height: 550px;
+        }
+
+        .storymep {
+            background-image: url("storymep/Frame264.png");
+            width: 50%;
+            height: 750px;
+        }
+		
+		/* Навигация в D1 */
+		.nav {
+			position: absolute;
+			bottom: 0;
+			width: 100%
+		}
+
+        /* Flex контейнер для блоков видео */
+        .flex-container {
+            font-family: 'ZonaPro';
+            display: flex;
+            width: 1000px;
+            height: 550px;
+            align-items: start;
+            flex-wrap: wrap;
+            padding: 10px;
+            margin: 100px auto;
+        }
+
+        /* Общие стили для элементов flex-контейнера */
+		.flex-container > div {
+            flex-basis: auto;
+            text-align: center;
+            padding: 15px;
+            font-size: 20px;
+            place-content: space-evenly;
+			background: white;
+			border-radius: 20px;
+			box-shadow: 0 0 50px 20px rgba(50, 229, 229, 0.63);
+		}
+		
+		.flex-container > div p {
+			margin: 0; /* Убираем отступы у p в flex-элементах */
+		}
+        /* Размеры и стили для конкретных элементов flex-контейнера */
+        .flex-container_element-1 {
+            width: 70px;
+            height: 250px;
+        }
+
+        .flex-container_element-2 {
+            width: 80px;
+            height: 80px;
+            margin-left: 35px;
+        }
+
+        .flex-container_element-3 {
+            width: 160px;
+            height: 20px;
+            margin-left: 35px;
+			box-shadow: 0 0 20px 20px rgba(50, 229, 229, 0.63);
+        }
+
+        .flex-container_element-4 {
+            width: 200px;
+            height: 150px;
+            margin-left: 35px;
+			box-shadow: 0 0 20px 20px rgba(50, 229, 229, 0.63);
+        }
+
+        .flex-container_element-5 {
+            width: 30px;
+            height: 250px;
+            margin-left: 35px;
+			border-radius: 30px;
+        }
+
+        .flex-container_element-6 {
+            width: 40px;
+            height: 250px;
+            margin-left: 35px;
+            border-radius: 10px;
+        }
+		
+		.flex-container_element-1_1 {
+			width: 140px;
+			height: 90px;
+			margin-top: -55px;
+		}
+
+		.flex-container_element-2_1 {
+			width: 80px;
+			height: 100px;
+			margin-top: -220px;
+			margin-left: -40px;
+		}
+		
+		.flex-container_element-3_1 {
+			width: 160px;
+			height: 170px;
+			margin-top: -290px;
+			margin-left: 45px;
+		}
+
+		.flex-container_element-4_1 {
+			width: 250px;
+			height: 90px;
+			margin-left: -280px;
+			margin-top: -55px;
+		}
+
+		.flex-container_element-5_1 {
+			width: 130px;
+			height: 40px;
+			margin-top: -160px;
+			margin-left: 30px;
+			align-self: flex-start;
+		}
+
+		.flex-container_element-6_1 {
+			width: 50px;
+			height: 90px;
+			margin-top: -55px;
+			margin-left: -160px;
+		}
+		
+		.flex-container_element-7_1 {
+			width: 280px;
+			height: 90px;
+			margin-top: -55px;
+			margin-left: 40px;
+		}
+
+        /* Повороты текста */
+		.rotate  { transform:rotate(-90deg) translateX(-50%); white-space:nowrap;}
+		.rotate2 { transform:rotate(-90deg) translateX(-280%); white-space:nowrap;}
+		.rotate3 { transform:rotate(-90deg) translateX(-250%); white-space:nowrap;}
+		.rotate4 { transform:rotate(-90deg) translateX(-40%); white-space:nowrap;}
+
+		/* Ссылки */
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+		/* Всплывающие окна */
+        .opendiv {
+            width: 60%;
+            height: 80%;
+            overflow: hidden;
+            margin: 0 auto;
+            display: none;
+        }
+
+		/* Выравнивание текста */
+        .center {
+            text-align: center;
+        }
+		/* Видео в всплывающем окне */
+        .videozapis {
+            width: 100%;
+            height: 80%;
+            margin: 0 auto;
+        }
+
+        /* Медиа запросы для адаптивности */
+        @media (max-width: 600px) {
+			.menu{
+				width:100%;
+				height:50%;
+				margin:0 auto;
+			}
+
+			.floatLeft{
+				margin: 10px;
+				font-size:16px;
+			}
+
+			.D1{
+				height: 450px;
+				background-size: cover;
+				background-position: 30%;
+			}
+			
+			.orientir {width:100%;}
+			
+			.orientir2 {
+				background-size: cover;
+				background-position: 50%;
+				height: 250px;
+			}
+
+			.igra {
+				height: 300px;
+			}
+
+			.karta {height: 300px;}
+			.storymep {height:400px;width:90%;}
+
+			.flex-container {
+				width: 100%;
+				padding: 0;
+				flex-wrap: nowrap;
+				flex-direction: column;
+				justify-content: center;
+				margin: 100px auto;
+				height: 100%;
+			}
+			.flex-container > div {
+				width: 80%;
+				margin: 10px auto;
+				height: 25px;
+				font-size: 16px;
+				box-shadow: 0 0 10px 5px rgba(50, 229, 229, 0.63);
+			}
+			.video {height: 950px;}
+			.rotate {transform: none;margin:0;}
+			.rotate2 {transform: none;margin:0;}
+			.rotate3 {transform: none;margin:0;}
+			.rotate4 {transform: none;margin:0;}
+			.opendiv {display: none;width: 100%;height: 50%;}
+			.header {height: 60px;background-size: 100% 100%;}
+        }
+		.download-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Зеленый цвет */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.download-button:hover {
+    background-color: #367c39; /* Темно-зеленый при наведении */
+}
+
+.download-button::before {
+    content: '\2193'; /* Unicode символ стрелочки вниз (скачивание) */
+    margin-right: 5px;
+    font-size: 20px;
+}
+    </style>
+</head>
+<body>
+
+<!-- Шапка сайта -->
+<div class='header' ></div>
+
+<!-- Основной контент -->
+<div class='menu'>
+
+    <!-- Секция D1 (главный блок) -->
+    <div class="D1 section">
+		<!-- Навигация внутри D1 -->
+        <div class="nav">
+            <a href="#section1"><input class="floatLeft" type="button" value="игра"></a>
+            <a href="#section2"><input class="floatLeft" type="button" value="карта"></a>
+            <a href="#section3"><input class="floatLeft" type="button" value="видео"></a>
+            <a href="#section4"><input class="floatLeft" type="button" value="сторимэп"></a>
+        </div>
+    </div>
+
+	<!-- Секция с изображением orientir -->
+    <div class="orientir section"></div>
+	
+	<!-- Секция с изображением orientir2 -->
+    <div class="orientir2 section"></div>
+    
+	<!-- Секция игра -->
+    <div class="igra section" id="section1">
+        <!-- Кнопка для открытия карты -->
+        <button class="igra-button" data-fancybox data-src="#but">ИГРАТЬ</button>
+    </div>
+	<!-- Кнопка скачивания -->
+
+<!-- Секция карта -->
+<div class="karta section" id="section2">
+  <div style="height: 380px; width: 100%; padding: 8% 43% 4% 7%; position: relative;">
+    <!-- Ссылка для открытия карты в модальном окне -->
+    <a style="width: 100%; opacity: 0%; height: 380px; padding: 20% 43% 4% 7%; position: relative; top: 30%;" data-fancybox href="#butt"></a>
+  </div>
+</div>
+<!-- Модальное окно с картой (с новым id "butt") -->
+<div id="butt" style="display: none;">
+  <img src="karta2/photo_2024-12-07_22-03-16.jpg" style="width: 100%; height: 100%;" />
+</div>
+      <!-- Кнопка скачивания -->
+<a href="karta2/photo_2024-12-07_22-03-16.jpg" download="photo_2024-12-07_22-03-16.jpg"
+   style="display: inline-block;
+          padding: 5px 5px;
+          margin-top: 15px;
+          position: relative; /* Установили relative */
+          bottom: 265px; /* переместили на 10px ниже */
+          left: 200px; /* переместили на 20px правее */
+          background-color: #007bff;
+          color: #fff;
+          text-decoration: none;
+          border-radius: 5px;
+		  opacity: 0;
+          text-align: center;">
+Скачать файл
+</a>
+    </a>
+  </div>
+</div>
+<!-- Секция видео -->
+<div class="video section" id="section3">
+    <div class="flex-container">      
+        <div class="flex-container_element-1"><p class="rotate"><a data-fancybox href="#hidden">Г(розовый)-Г</a></p></div>
+        <div class="flex-container_element-2"><p class="rotate"><a data-fancybox href="#hidde">Л-А</a></p></div>
+        <div class="flex-container_element-3"><p class="rotate"><a data-fancybox href="#hidd">Л-Г</a></p></div>
+        <div class="flex-container_element-4"><p class="rotate"><a data-fancybox href="#hid">Б-Центральная столовая</a></p></div>
+        <div class="flex-container_element-5"><p class="rotate"><a data-fancybox href="#hi">А-Студофис-УдиПО</a></p></div>
+        <div class="flex-container_element-6"><p class="rotate"><a data-fancybox href="#h">К-Столовая К корпуса</a></p></div>
+        <div class="flex-container_element-1_1"><p class="rotate"><a data-fancybox href="#dabb">Б-Л</a></p></div>
+        <div class="flex-container_element-2_1"><p class="rotate"><a data-fancybox href="#dabbb">Б-А</a></p></div>
+        <div class="flex-container_element-3_1"><p class="rotate"><a data-fancybox href="#dabbbb">Студофис-Г (розовый)</a></p></div>
+        <div class="flex-container_element-4_1"><p class="rotate"><a data-fancybox href="#dob">Г-Г (розовый)</a></p></div>
+        <div class="flex-container_element-5_1"><p class="rotate"><a data-fancybox href="#dobb">Метро-К</a></p></div>
+        <div class="flex-container_element-6_1"><p class="rotate"><a data-fancybox href="#dobbb">Метро-Б</a></p></div>
+        <div class="flex-container_element-7_1"><p class="rotate"><a data-fancybox href="#dobbbb">Студофис-Л</a></p></div>
+    </div>
+</div>
+
+<!-- Всплывающие окна с видео -->
+<div class="opendiv" id="hidden">
+    <h2 class="center">Г-г(розовый)</h2>
+    <video class="videozapis" src="video/video1.MOV" controls></video>
+</div>
+<div class="opendiv" id="hidde">
+    <h2 class="center">Л-А</h2>
+    <video class="videozapis" src="video/Л-А.MP4" controls></video>
+</div>
+<div class="opendiv" id="hidd">
+    <h2 class="center">Л-Г</h2>
+    <video class="videozapis" src="video/Л-г.MOV" controls></video>
+</div>
+<div class="opendiv" id="hid">
+    <h2 class="center">Б-Центральная столовая</h2>
+    <video class="videozapis" src="video/Б-центральная столовая.MP4" controls></video>
+</div>
+<div class="opendiv" id="hi">
+    <h2 class="center">А-Студофис-УдиПО</h2>
+    <video class="videozapis" src="video/А-студофис-УдиПО.MOV" controls></video>
+</div>
+<div class="opendiv" id="h">
+    <h2 class="center">К-Столовая К корпуса</h2>
+    <video class="videozapis" src="video/К-столовая к корпуса.MOV" controls></video>
+</div>
+<div class="opendiv" id="dabb">
+    <h2 class="center">Б-Л</h2>
+    <video class="videozapis" src="video/Б-л.MOV" controls></video>
+</div>
+<div class="opendiv" id="dabbb">
+    <h2 class="center">Б-А</h2>
+    <video class="videozapis" src="video/Б-а.MOV" controls></video>
+</div>
+<div class="opendiv" id="dabbbb">
+    <h2 class="center">Студофис-Г (розовый)</h2>
+    <video class="videozapis" src="video/Студофис-г(розовый).MOV" controls></video>
+</div>
+<div class="opendiv" id="dob">
+    <h2 class="center">Г-Г (розовый)</h2>
+    <video class="videozapis" src="video/Г-г(розовый.MOV" controls></video>
+</div>
+<div class="opendiv" id="dobb">
+    <h2 class="center">Метро-К</h2>
+    <video class="videozapis" src="video/Метро-к.MOV" controls></video>
+</div>
+<div class="opendiv" id="dobbb">
+    <h2 class="center">Метро-Б</h2>
+    <video class="videozapis" src="video/Метро-б.MOV" controls></video>
+</div>
+<div class="opendiv" id="dobbbb">
+    <h2 class="center">Студофис-Л</h2>
+    <video class="videozapis" src="video/Студофис-л.MOV" controls></video>
+</div>
+
+<!-- Карта и красный кружок -->
+<div class="opendiv" id="but" style="position: relative; width: 500px; height: 500px;">
+  <img id="map-image" style="width:100%; height:100%;" src="igra/mapa.jfif" />
+
+  <!-- Красный кружок -->
+  <div id="red-circle" style="width: 20px; height: 20px; background-color: red; border-radius: 50%; position: absolute; top: 89%; left: 36%; transform: translate(-50%, -50%);"></div>
+</div>
+
+<script>
+  const circle = document.getElementById('red-circle');
+  const map = document.getElementById('map-image');
+
+  // Функция для перемещения кружка по клику
+  const moveCircle = (x, y) => {
+    const mapRect = map.getBoundingClientRect();
+
+    // Вычисляем новые координаты, с учётом клика на карте
+    const newLeft = x - mapRect.left;
+    const newTop = y - mapRect.top;
+
+    // Ограничиваем передвижение кружка в пределах карты
+    circle.style.left = `${Math.max(0, Math.min(mapRect.width - circle.offsetWidth, newLeft))}px`;
+    circle.style.top = `${Math.max(0, Math.min(mapRect.height - circle.offsetHeight, newTop))}px`;
+  };
+
+  // Перемещение кружка по клику мыши
+  map.addEventListener('click', (e) => {
+    moveCircle(e.clientX, e.clientY);
+  });
+
+  // Перемещение кружка по касанию экрана (для мобильных устройств)
+  map.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    moveCircle(touch.clientX, touch.clientY);
+  });
+</script>
+
+
+
+
+</div>
+
+
+</div>
+
+
+<!-- Секция сторимэп -->
+<div class="storymep section" id="section4">
+  <img style="width:100%; height:100%;" src="storymep/Frame264.png" />
+  
+  <!-- Кнопка перехода -->
+  <a href="https://uploads.knightlab.com/storymapjs/a34d00df6a6590f5bcdd4fd5a1e75f43/navigatsiia/draft.html" target="_blank" 
+     style="position: absolute; 
+            bottom: 10px; 
+            left: 10px; 
+            padding: 10px 20px; 
+            background-color: #4CAF50; /* Зеленый цвет */
+            color: white; 
+            text-decoration: none; 
+            font-size: 16px; 
+            border-radius: 5px; 
+			opacity: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+            transition: background-color 0.3s ease;">
+    Переход
+  </a>
+</div>
+
+
+</body>
+</html>
